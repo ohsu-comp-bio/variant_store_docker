@@ -1,0 +1,2 @@
+#!/bin/sh
+exec $STORE_DIR/GA4GHAPI/ga4gh/runserver.py

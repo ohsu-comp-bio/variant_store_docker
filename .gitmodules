@@ -1,0 +1,6 @@
+[submodule "src/store"]
+	path = _src/store
+	url = git@github.com:Intel-HSS/store.git
+[submodule "src/TileDB"]
+	path = _src/TileDB
+	url = git@github.com:Intel-HSS/TileDB.git

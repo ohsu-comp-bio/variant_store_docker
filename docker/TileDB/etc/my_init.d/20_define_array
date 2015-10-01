@@ -1,0 +1,27 @@
+# Run tiledb_show_array_schema. If the schema doesn't exist, an error message is outputted to stderr.
+SCHEMA_UNDEFINED=$($TILEDB_BIN/tiledb_show_array_schema -w $TILEDB_CONFIG_WORKSPACE -A $TILEDB_CONFIG_ARRAY_NAME 2>&1 > /dev/null)
+
+if [ ! -z "$SCHEMA_UNDEFINED" ]
+then
+	# Determine sample count from parsing config.json
+	TILEDB_CONFIG_MAX_ROW_DOMAIN=$(cat $TILEDB_DATA_CONFIG | python -c '\
+		import sys;\
+		import json;\
+		content=json.load(sys.stdin);\
+		print(sorted(map(int,content["CallSetId2VariantSetId"].keys()))[-1])'
+
+	# Specify our dimension domains.
+	TILEDB_CONFIG_DIM_DOMAINS=0,$TILEDB_CONFIG_MAX_ROW_DOMAIN,0,$TILEDB_CONFIG_MAX_COL_DOMAIN
+
+	# Create the array.
+	$TILEDB_BIN/tiledb_define_array \
+		-w $TILEDB_CONFIG_WORKSPACE \
+		-A $TILEDB_CONFIG_ARRAY_NAME \
+		-a $TILEDB_CONFIG_ATTRIBUTE_NAMES \
+		-d $TILEDB_CONFIG_DIM_NAMES \
+		-D $TILEDB_CONFIG_DIM_DOMAINS \
+		-t $TILEDB_CONFIG_TYPES \
+		-o $TILEDB_CONFIG_CELL_ORDER \
+		-c $TILEDB_CONFIG_CAPACITY \
+		-s $TILEDB_CONFIG_CONSOLIDATION_STEP
+fi
