@@ -1,6 +1,6 @@
-[submodule "store/src/store"]
-	path = store/src/store
+[submodule "store/opt/store"]
+	path = store/opt/store
 	url = git@github.com:Intel-HSS/store.git
-[submodule "tile_db/src/tile_db"]
-	path = tile_db/src/tile_db
+[submodule "tile_db/opt/tile_db"]
+	path = tile_db/opt/tile_db
 	url = git@github.com:Intel-HSS/TileDB.git

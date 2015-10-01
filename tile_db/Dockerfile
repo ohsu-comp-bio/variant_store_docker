@@ -31,11 +31,12 @@ WORKDIR $TILEDB_DIR
 
 RUN apt-get -qq update
 
-RUN apt-get install -y autotools-dev \
-	g++ \
-	build-essential \
-	openmpi-bin \
-	openmpi-doc \
-	libopenmpi-dev
+RUN apt-get install -y \
+  autotools-dev \
+  build-essential \
+  g++ \
+  libopenmpi-dev
+  openmpi-bin \
+  openmpi-doc \
 
 RUN make MPIPATH=/etc/alternatives/ BUILD=release -j 8
