@@ -1,0 +1,18 @@
+[web_configuration]
+debug = False
+
+[tiledb]
+workspace = {{ TILEDB_CONFIG_WORKSPACE }}
+arrayname = {{ TILEDB_CONFIG_ARRAY_NAME }}
+fields = {{ TILEDB_CONFIG_ATTRIBUTE_NAMES }}
+
+[virtualenv]
+virtualenv = {{ VARIANT_STORE_DIR }}/.venv/bin/activate_this.py
+site_packages = {{ VARIANT_STORE_DIR}}/.venv/lib/python2.7/site-packages
+
+[auto_configuration]
+searchlib = {{ VARIANT_STORE_DIR }}/search_library/lib/libquery.so
+meta_data_file = {{ VARIANT_STORE_DIR }}/GA4GHAPI/ga4gh/icgc.json
+assembly_config = {{ VARIANT_STORE_DIR }}/tools/tiledb/config.json
+chromosome_config = {{ VARIANT_STORE_DIR }}/tools/tiledb/hg19.json
+translate_path = {{ VARIANT_STORE_DIR }}/tools/tiledb/
