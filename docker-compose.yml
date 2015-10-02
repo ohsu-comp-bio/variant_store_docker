@@ -3,7 +3,7 @@ variant_store_data:
   build: data
 
 tile_db:
-  container_name: store
+  container_name: tile_db
   build: tile_db
   command: echo bypassing init
 
