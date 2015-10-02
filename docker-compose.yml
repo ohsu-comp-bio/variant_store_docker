@@ -1,0 +1,14 @@
+variant_store_data:
+  container_name: data
+  build: data
+
+tile_db:
+  container_name: store
+  build: tile_db
+  command: echo bypassing init
+
+variant_store:
+  container_name: variant_store
+  build: variant_store
+  volumes_from:
+    - variant_store_data

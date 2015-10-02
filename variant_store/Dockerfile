@@ -1,21 +1,23 @@
-FROM tiledb
+FROM variantstoredocker_tile_db
 
 EXPOSE 5000
 
-ENV STORE_DIR /opt/store
+ENV VARIANT_STORE_DIR /opt/variant_store
 
 ADD . /
 
-WORKDIR $STORE_DIR/search_library
+WORKDIR $VARIANT_STORE_DIR/search_library
 
 RUN apt-get -qq update
 
-RUN apt-get install -y python-setuptools
+RUN apt-get install -y \
+  libmysqlclient-dev \
   python-dev \
-  libmysqlclient-dev
+  python-setuptools
 
-RUN easy_install pip
-RUN pip install --upgrade
-RUN pip install -r ../GA4GHAPI/reqs.txt
+# Create virtual environment and install reqs into that virtualenv.
+RUN easy_install pip && pip install virtualenv
+RUN virtualenv $VARIANT_STORE_DIR/.venv
+RUN $VARIANT_STORE_DIR/.venv/bin/pip install -r ../GA4GHAPI/reqs.txt
 
-RUN make TILEDB=$TILEDB_DIR SPEED=1 -j 8
+RUN make TILEDB=$TILEDB_DIR/ SPEED=1 -j 8

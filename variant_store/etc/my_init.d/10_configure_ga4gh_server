@@ -1,1 +1,1 @@
-$STORE_DIR/GA4GHAPI/install.py
+$VARIANT_STORE_DIR/.venv/bin/python $VARIANT_STORE_DIR/GA4GHAPI/install.py

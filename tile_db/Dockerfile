@@ -2,7 +2,7 @@ FROM phusion/baseimage
 
 ENV LD_LIBRARY_PATH /usr/lib/openmpi/lib/
 
-ENV TILEDB_DIR /opt/tiledb
+ENV TILEDB_DIR /opt/tile_db
 ENV TILEDB_BIN $TILEDB_DIR/tiledb_cmd/bin/release
 
 # Default directory where data is stored.
@@ -25,7 +25,7 @@ ENV TILEDB_CONFIG_CONSOLIDATION_STEP 5
 # Note that TILEDB_CONFIG_DIM_DOMAINS is specified in 20_define_array
 ENV TILEDB_CONFIG_MAX_COL_DOMAIN 4000000000
 
-ADD . $TILEDB_DIR
+ADD . /
 
 WORKDIR $TILEDB_DIR
 
@@ -35,8 +35,8 @@ RUN apt-get install -y \
   autotools-dev \
   build-essential \
   g++ \
-  libopenmpi-dev
+  libopenmpi-dev \
   openmpi-bin \
-  openmpi-doc \
+  openmpi-doc
 
 RUN make MPIPATH=/etc/alternatives/ BUILD=release -j 8
