@@ -1,2 +1,2 @@
-#!/bin/sh
+#!/bin/bash
 exec $VARIANT_STORE_DIR/.venv/bin/python $VARIANT_STORE_DIR/GA4GHAPI/ga4gh/runserver.py

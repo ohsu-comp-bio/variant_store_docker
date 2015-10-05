@@ -9,10 +9,10 @@ ENV TILEDB_BIN $TILEDB_DIR/tiledb_cmd/bin/release
 ENV TILEDB_DATA_DIR /data/tiledb
 
 # Metadata for data to be imported.
-ENV TILEDB_DATA_CONFIG $TILEDB_DATA_DIR/data.json
+ENV TILEDB_DATA_CONFIG $TILEDB_DATA_DIR/metadata.json
 
 # CSV data to be imported.
-ENV TILEDB_IMPORT_DATA $TILEDB_DATA_DIR/data.csv
+ENV TILEDB_IMPORT_DATA $TILEDB_DATA_DIR/data.tiledb
 
 # Use sane defaults for TileDB.
 ENV TILEDB_CONFIG_ATTRIBUTE_NAMES END,REF,ALT,QUAL,FILTER,BaseQRankSum,ClippingRankSum,MQRankSum,ReadPosRankSum,DP,MQ,MQ0,DP_FORMAT,MIN_DP,GQ,SB,AD,PL,GT

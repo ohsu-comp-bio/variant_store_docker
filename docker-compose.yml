@@ -1,14 +1,16 @@
-variant_store_data:
+data:
   container_name: data
   build: data
 
 tile_db:
   container_name: tile_db
   build: tile_db
-  command: echo bypassing init
+  command: true
 
 variant_store:
   container_name: variant_store
   build: variant_store
   volumes_from:
-    - variant_store_data
+    - data
+  ports:
+    - 5000

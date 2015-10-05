@@ -6,7 +6,7 @@ ENV VARIANT_STORE_DIR /opt/variant_store
 ENV VARIANT_STORE_GA4GH_CONFIG $VARIANT_STORE_DIR/GA4GHAPI/ga4gh/ga4gh.conf
 
 # TileDB configuration variables
-ENV TILEDB_CONFIG_WORKSPACE /data/workspace
+ENV TILEDB_CONFIG_WORKSPACE /data/tiledb/workspace
 ENV TILEDB_CONFIG_ARRAY_NAME variant_store
 
 ADD . /
