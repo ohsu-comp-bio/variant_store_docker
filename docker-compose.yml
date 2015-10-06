@@ -5,7 +5,7 @@ data:
 tile_db:
   container_name: tile_db
   build: tile_db
-  command: true
+  command: /bin/true
 
 variant_store:
   container_name: variant_store
@@ -13,4 +13,4 @@ variant_store:
   volumes_from:
     - data
   ports:
-    - 5000
+    - 5000:5000
