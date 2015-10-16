@@ -1,5 +1,6 @@
-data:
-  container_name: data
+variant_store_data:
+
+  container_name: variant_store_data
   build: data
 
 tile_db:
@@ -11,6 +12,6 @@ variant_store:
   container_name: variant_store
   build: variant_store
   volumes_from:
-    - data
+    - variant_store_data
   ports:
-    - 5000:5000
+    - 6000:5000
