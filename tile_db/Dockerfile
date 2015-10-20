@@ -5,6 +5,8 @@ ENV LD_LIBRARY_PATH /usr/lib/openmpi/lib/
 ENV TILEDB_DIR /opt/tile_db
 ENV TILEDB_BIN $TILEDB_DIR/tiledb_cmd/bin/release
 
+ENV MPI_DIR /etc/alternatives
+
 # Default directory where data is stored.
 ENV TILEDB_DATA_DIR /data/tiledb
 
@@ -39,4 +41,4 @@ RUN apt-get install -y \
   openmpi-bin \
   openmpi-doc
 
-RUN make MPIPATH=/etc/alternatives/ BUILD=release -j 8
+#RUN make MPIPATH=/etc/alternatives/ BUILD=release -j 8
