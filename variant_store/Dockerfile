@@ -41,4 +41,4 @@ RUN wget https://github.com/miloyip/rapidjson/archive/master.zip
 RUN unzip master.zip
 RUN mv rapidjson-master $RAPID_JSON_DIR
 
-RUN cd search_library && make MPIPATH=$MPI_DIR/ TILEDB=$TILEDB_DIR/ RAPIDJSON_INCLUDE_DIR=$RAPID_JSON_DIR/include/ SPEED=1 -j 8
+RUN cd search_library && make MPIPATH=$MPI_DIR/ TILEDB=$TILEDB_DIR/ RAPIDJSON_INCLUDE_DIR=$RAPID_JSON_DIR/include/ SPEED=1 -j 8 BUILD=release
