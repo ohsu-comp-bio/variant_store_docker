@@ -11,4 +11,4 @@
 .DS_Store
 
 # ignore source code from https://github.com/Intel-HLS
-GenomicDB/store
+GenomicsDB/store

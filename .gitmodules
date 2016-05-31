@@ -1,6 +1,3 @@
-[submodule "variant_store/opt/variant_store"]
-	path = variant_store/opt/variant_store
+[submodule "GenomicsDB/store"]
+	path = GenomicsDB/store
 	url = git@github.com:Intel-HSS/store.git
-[submodule "tile_db/opt/tile_db"]
-	path = tile_db/opt/tile_db
-	url = git@github.com:Intel-HSS/TileDB.git
