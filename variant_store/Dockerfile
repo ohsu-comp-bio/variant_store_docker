@@ -11,16 +11,16 @@ RUN yum -y install \
   python-pip \
   python-setuptools \
   postgresql-devel \
-  python-devel
-#  mod_wsgi
-#   uwsgi \
-#   uwsgi-plugin-python
+  python-devel \
+  uwsgi
 
-# install python dependencies and store modules.
+# install python dependencies and store modules.  Setting up a virtual environment shouldn't be necessary in a
+# virtual container, but the code is written to expect it.
 #
 WORKDIR $VARIANTSTORE_DIR/store
-RUN pip install -r requirements.txt
-RUN python setup.py develop
+RUN pip install virtualenv
+RUN virtualenv venv
+RUN . venv/bin/activate && pip install -r requirements.txt && python setup.py develop
 
 # add server configuration files
 ADD variantstore.ini .
@@ -33,16 +33,3 @@ EXPOSE 5000
 
 ENTRYPOINT ["uwsgi"]
 CMD ["--ini",  "variantstore.ini"]
-
-# install.py expects there to be a $USER, but docker container doesn't have one.
-#
-# install creates "GA4GHAPI.pth in ~/.local/lib/python/site-packages.  is that supposed to load into the PYTHONPATH?
-#
-#  wsgi.py checks for PYTHONPATH having "web".
-#  	Exception: GA4GHAPI path is not set. Run store/web/install.py, and use --system-site-packages when creating a virtualenv
-#
-#  wsgi.py loads ga4gh_test.conf by default
-#
-# why does config file need to specify virtualenv location?
-#
-# No such file or directory: '/variantdb/repos/venv/bin/activate_this.py'
