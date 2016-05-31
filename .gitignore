@@ -12,5 +12,5 @@
 
 # ignore source code from https://github.com/Intel-HLS
 GenomicsDB/store
-data/store
 data/store_config_files
+data/mafs_to_import
