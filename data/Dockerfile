@@ -29,5 +29,8 @@ WORKDIR $VARIANTSTORE_DIR/store/utils
 # And at https://github.com/Intel-HSS/store/wiki/VCF-to-TileDB-Import-Design#config-file
 ADD store_config_files/load_to_tile.cfg $VARIANTSTORE_DIR/store/utils/example_configs/load_to_tile.cfg
 ADD store_config_files/tile_loader.json $VARIANTSTORE_DIR/store/utils/example_configs/tile_loader.json
+ADD store_config_files/project_config.json $VARIANTSTORE_DIR/store/utils/example_configs/project_config.json
+ADD store_config_files/variant_config.json $VARIANTSTORE_DIR/store/utils/example_configs/variant_config.json
+ADD mafs_to_import/* /tmp/mafs_to_import/
 
-RUN python maf2tile.py
+RUN python maf2tile.py -c example_configs/project_config.json -o outputfi.txt -d $VARIANTSTORE_DIR/store/ -i /tmp/mafs_to_import -l /example_configs/load_to_tile.cfg
