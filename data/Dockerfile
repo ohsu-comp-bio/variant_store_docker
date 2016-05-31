@@ -15,8 +15,7 @@ RUN yum -y install \
 
 WORKDIR $VARIANTSTORE_DIR/store
 RUN pip install -r requirements.txt
-# RUN python setup.py develop
-# pretty sure setup.py is only necessary for metadb and/or server
+RUN python setup.py develop
 
 ENV PATH /opt/variant_store/store/search_library/dependencies/GenomicsDB/bin:$PATH
 
