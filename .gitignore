@@ -1,0 +1,14 @@
+# Files to ignore in version control
+
+# IntelliJ
+*.iml
+.idea/
+
+# Emacs
+*~
+
+# Mac OSX
+.DS_Store
+
+# ignore source code from https://github.com/Intel-HLS
+GenomicDB/store

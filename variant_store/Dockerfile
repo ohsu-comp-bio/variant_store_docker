@@ -1,44 +1,48 @@
-FROM variantstoredocker_tile_db
+#
+# Build https://github.com/Intel-HSS/store
+#
+# Installation described https://github.com/Intel-HSS/store/wiki/Setup-and-Initialization
+#
+FROM store_base
 
+# psycopg2 needs pg_config in postgresql-devel
+RUN yum -y install epel-release
+RUN yum -y install \
+  python-pip \
+  python-setuptools \
+  postgresql-devel \
+  python-devel
+#  mod_wsgi
+#   uwsgi \
+#   uwsgi-plugin-python
+
+# install python dependencies and store modules.
+#
+WORKDIR $VARIANTSTORE_DIR/store
+RUN pip install -r requirements.txt
+RUN python setup.py develop
+
+# add server configuration files
+ADD variantstore.ini .
+ADD ga4gh.conf web/ga4gh_test.conf
+
+ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
+
+# Expose application port
 EXPOSE 5000
 
-ENV VARIANT_STORE_DIR /opt/variant_store
-ENV RAPID_JSON_DIR /opt/rapid_json
-ENV VARIANT_STORE_GA4GH_CONFIG $VARIANT_STORE_DIR/GA4GHAPI/ga4gh/ga4gh.conf
+ENTRYPOINT ["uwsgi"]
+CMD ["--ini",  "variantstore.ini"]
 
-
-# TileDB configuration variables
-ENV TILEDB_CONFIG_WORKSPACE /data/tiledb/workspace
-ENV TILEDB_CONFIG_ARRAY_NAME variant_store
-
-ADD . /
-
-WORKDIR $VARIANT_STORE_DIR
-
-RUN apt-get -qq update
-
-RUN apt-get install -y \
-  libmysqlclient-dev \
-  python-dev \
-  python-setuptools \
-  wget \
-  zip \
-  unzip
-
-RUN easy_install pip && pip install \
-  jinja2 \
-  virtualenv 
-
-# Create a virtual environment and install reqs into that virtualenv.
-RUN virtualenv $VARIANT_STORE_DIR/.venv
-RUN $VARIANT_STORE_DIR/.venv/bin/pip install -r GA4GHAPI/reqs.txt
-
-# Render our config file using environmental variables
-RUN j2 /etc/variant_store/ga4gh.conf.j2 > $VARIANT_STORE_GA4GH_CONFIG
-
-# Get Rapid JSON
-RUN wget https://github.com/miloyip/rapidjson/archive/master.zip
-RUN unzip master.zip
-RUN mv rapidjson-master $RAPID_JSON_DIR
-
-RUN cd search_library && make MPIPATH=$MPI_DIR/ TILEDB=$TILEDB_DIR/ RAPIDJSON_INCLUDE_DIR=$RAPID_JSON_DIR/include/ SPEED=1 -j 8 BUILD=release
+# install.py expects there to be a $USER, but docker container doesn't have one.
+#
+# install creates "GA4GHAPI.pth in ~/.local/lib/python/site-packages.  is that supposed to load into the PYTHONPATH?
+#
+#  wsgi.py checks for PYTHONPATH having "web".
+#  	Exception: GA4GHAPI path is not set. Run store/web/install.py, and use --system-site-packages when creating a virtualenv
+#
+#  wsgi.py loads ga4gh_test.conf by default
+#
+# why does config file need to specify virtualenv location?
+#
+# No such file or directory: '/variantdb/repos/venv/bin/activate_this.py'

@@ -9,7 +9,8 @@ images used in this configuration:
 2. `variant_store`: Installs Variant Store from source and installs the
   GA4GH-based web server as a service.
 
-3. `data`: A simple [data container](https://medium.com/@ramangupta/why-docker-data-containers-are-good-589b3c6c749e) 
+3. `data`: A simple [data container](https://medium.com/@ramangupta/why-docker-data-containers-are-good-589b3c6c749e)
+  (data containers replaced by [named volumes](https://docs.docker.com/engine/userguide/containers/dockervolumes/))
   that's used for managing the TileDB workspace. Note that this creates a
   `/data` directory at the root of the filesystem that is shared across any
   containers that call `--volumes-from=variant_store_data`.
