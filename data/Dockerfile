@@ -32,4 +32,4 @@ ADD store_config_files/project_config.json $VARIANTSTORE_DIR/store/utils/example
 ADD store_config_files/variant_config.json $VARIANTSTORE_DIR/store/utils/example_configs/variant_config.json
 ADD mafs_to_import/* /tmp/mafs_to_import/
 
-RUN python maf2tile.py -c example_configs/project_config.json -o outputfi.txt -d $VARIANTSTORE_DIR/store/ -i /tmp/mafs_to_import -l /example_configs/load_to_tile.cfg
+CMD python maf2tile.py -c example_configs/project_config.json -o outputfi.txt -d $VARIANTSTORE_DIR/store/ -i /tmp/mafs_to_import -l ./example_configs/load_to_tile.cfg
