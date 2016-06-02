@@ -26,6 +26,8 @@ RUN . venv/bin/activate && pip install -r requirements.txt && python setup.py de
 ADD variantstore.ini .
 ADD ga4gh.conf web/ga4gh_test.conf
 
+# libquery.so at $VARIANTSTORE_DIR/store/search_library/lib
+
 ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
 
 # Expose application port

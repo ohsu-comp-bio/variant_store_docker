@@ -17,7 +17,7 @@ WORKDIR $VARIANTSTORE_DIR/store
 RUN pip install -r requirements.txt
 RUN python setup.py develop
 
-ENV PATH /opt/variant_store/store/search_library/dependencies/GenomicsDB/bin:$PATH
+ENV PATH $VARIANTSTORE_DIR/store/search_library/dependencies/GenomicsDB/bin:$PATH
 
 RUN create_tiledb_workspace $VARIANTSTORE_DIR/GenomicsDB_Workspace
 
