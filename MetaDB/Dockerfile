@@ -13,6 +13,11 @@ RUN apt-get install -y nginx \
     python-pip \
     python-dev
 
-ENV PATH /usr/lib/postgresql/$PG_MAJOR/bin:$PATH
+ENV POSTGRES_USER metadb
+ENV POSTGRES_PASSWORD metadb
+ENV POSTGRES_DB metadb
+ENV PG_HOST localhost
+
+#CMD createdb metadb
 
 #ENV PYTHONPATH $PYTHONPATH:$VARIANTSTORE_DIR/store/:$VARIANTSTORE_DIR/store/web

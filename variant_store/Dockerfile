@@ -18,15 +18,26 @@ RUN yum -y install \
 # virtual container, but the code is written to expect it.
 #
 WORKDIR $VARIANTSTORE_DIR/store
-RUN pip install virtualenv
-RUN virtualenv venv
-RUN . venv/bin/activate && pip install -r requirements.txt && python setup.py develop
+#RUN pip install virtualenv
+#RUN virtualenv venv
+#RUN . venv/bin/activate && pip install -r requirements.txt && python setup.py develop
+RUN pip install -r requirements.txt && python setup.py develop
+
 
 # add server configuration files
 ADD variantstore.ini .
 ADD ga4gh.conf web/ga4gh_test.conf
 
-ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
+ENV PYTHONPATH $PYTHONPATH:$VARIANTSTORE_DIR/store:$VARIANTSTORE_DIR/store/web
+
+RUN pip install alembic
+RUN pip install psycopg2
+#WORKDIR $VARIANTSTORE_DIR/store/metadb
+RUN cd metadb
+ADD alembic.metadb.ini ./alembic.ini
+RUN alembic init alembic
+CMD alembic upgrade head
+#RUN psql -d metadb -h localhost -p 5432 -c "alembic upgrade head"
 
 # Expose application port
 EXPOSE 5000
