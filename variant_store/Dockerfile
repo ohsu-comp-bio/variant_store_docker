@@ -39,6 +39,10 @@ RUN alembic init alembic
 CMD alembic upgrade head
 #RUN psql -d metadb -h localhost -p 5432 -c "alembic upgrade head"
 
+# libquery.so at $VARIANTSTORE_DIR/store/search_library/lib
+
+#ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
+
 # Expose application port
 EXPOSE 5000
 
