@@ -14,13 +14,8 @@ RUN yum -y install \
   python-devel \
   uwsgi
 
-# install python dependencies and store modules.  Setting up a virtual environment shouldn't be necessary in a
-# virtual container, but the code is written to expect it.
-#
+# install python dependencies and store modules.
 WORKDIR $VARIANTSTORE_DIR/store
-#RUN pip install virtualenv
-#RUN virtualenv venv
-#RUN . venv/bin/activate && pip install -r requirements.txt && python setup.py develop
 RUN pip install -r requirements.txt && python setup.py develop
 
 # add server configuration files
@@ -31,14 +26,16 @@ ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
 
 WORKDIR $VARIANTSTORE_DIR/store/metadb
 ADD alembic.metadb.ini ./alembic.ini
-CMD alembic upgrade head
+#CMD alembic upgrade head
 
 # libquery.so at $VARIANTSTORE_DIR/store/search_library/lib
 
 # Expose application port
 EXPOSE 5000
 
-WORKDIR $VARIANTSTORE_DIR/store
+#WORKDIR $VARIANTSTORE_DIR/store
+#ENTRYPOINT ["uwsgi"]
+#CMD ["--ini",  "variantstore.ini"]
 
-ENTRYPOINT ["uwsgi"]
-CMD ["--ini",  "variantstore.ini"]
+ADD run_both.sh .
+CMD bash run_both.sh
