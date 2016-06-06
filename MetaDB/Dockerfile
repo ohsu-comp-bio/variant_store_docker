@@ -6,8 +6,8 @@
 
 FROM postgres
 
-RUN apt-get update
-RUN apt-get upgrade
+RUN apt-get -y update
+RUN apt-get -y upgrade
 RUN apt-get install -y nginx \
     libapache2-mod-wsgi \
     python-pip \
@@ -16,8 +16,5 @@ RUN apt-get install -y nginx \
 ENV POSTGRES_USER metadb
 ENV POSTGRES_PASSWORD metadb
 ENV POSTGRES_DB metadb
-ENV PG_HOST localhost
-
-#CMD createdb metadb
 
 #ENV PYTHONPATH $PYTHONPATH:$VARIANTSTORE_DIR/store/:$VARIANTSTORE_DIR/store/web
