@@ -24,8 +24,8 @@ WORKDIR $VARIANTSTORE_DIR/store
 RUN pip install -r requirements.txt && python setup.py develop
 
 # add server configuration files
-#ADD variantstore.ini .
-#ADD ga4gh.conf web/ga4gh_test.conf
+ADD variantstore.ini .
+ADD ga4gh.conf web/ga4gh_test.conf
 
 ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
 
@@ -36,7 +36,9 @@ CMD alembic upgrade head
 # libquery.so at $VARIANTSTORE_DIR/store/search_library/lib
 
 # Expose application port
-#EXPOSE 5000
+EXPOSE 5000
 
-#ENTRYPOINT ["uwsgi"]
-#CMD ["--ini",  "variantstore.ini"]
+WORKDIR $VARIANTSTORE_DIR/store
+
+ENTRYPOINT ["uwsgi"]
+CMD ["--ini",  "variantstore.ini"]
