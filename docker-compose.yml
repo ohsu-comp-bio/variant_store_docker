@@ -1,17 +1,21 @@
-variant_store_data:
+metadb:
+  image: postgres
+  container_name: store_metadb
+  environment:
+  - POSTGRES_USER metadb
+  - POSTGRES_PASSWORD metadb
+  - POSTGRES_DB metadb
+  ports:
+  - 5432:5432
 
-  container_name: variant_store_data
-  build: data
-
-tile_db:
-  container_name: tile_db
-  build: tile_db
-  command: /bin/true
+genomicsdb:
+  container_name: store_base
+  build: GenomicsDB
 
 variant_store:
-  container_name: variant_store
+  container_name: store_server
   build: variant_store
-  volumes_from:
-    - variant_store_data
+  links:
+  - metadb
   ports:
-    - 6000:5000
+  - 6000:5000
