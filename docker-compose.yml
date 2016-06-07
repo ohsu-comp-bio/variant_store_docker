@@ -1,21 +1,25 @@
-metadb:
-  image: postgres
-  container_name: store_metadb
-  environment:
-  - POSTGRES_USER metadb
-  - POSTGRES_PASSWORD metadb
-  - POSTGRES_DB metadb
-  ports:
-  - 5432:5432
+version: '2'
 
-genomicsdb:
-  container_name: store_base
-  build: GenomicsDB
+services:
+  metadb:
+    container_name: store_metadb
+    build: MetaDB
+    ports:
+    - 5432:5432
 
-variant_store:
-  container_name: store_server
-  build: variant_store
-  links:
-  - metadb
-  ports:
-  - 6000:5000
+  genomicsdb:
+    container_name: store_base
+    build: GenomicsDB
+
+  variant_store:
+    container_name: store_server
+    build: variant_store
+    links:
+    - metadb
+    ports:
+    - 6000:5000
+
+networks:
+  default:
+    external:
+      name: metadb_network
