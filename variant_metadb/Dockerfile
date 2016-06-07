@@ -13,8 +13,8 @@ RUN apt-get install -y nginx \
     python-pip \
     python-dev
 
-ENV POSTGRES_USER metadb \
-    POSTGRES_PASSWORD metadb \
-    POSTGRES_DB metadb
+ENV POSTGRES_USER metadb 
+ENV POSTGRES_PASSWORD metadb 
+ENV POSTGRES_DB metadb
 
 #ENV PYTHONPATH $PYTHONPATH:$VARIANTSTORE_DIR/store/:$VARIANTSTORE_DIR/store/web
