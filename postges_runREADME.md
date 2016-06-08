@@ -1,25 +1,27 @@
 
-Commands for running MetaDB in PostgreSQL container, with initialization occuring in separate variant_store_server container. 
+Commands for running MetaDB in PostgreSQL container, with initialization occuring in separate variant_metadb_init container. 
 
 Create new network for the containers:
 
-  docker network create --driver bridge metadb_network
+  docker network create --driver bridge variant_store
 
 Build and run postgresql and metadb:
 
-Inside MetaDB/
+Inside variant_metadb/
 
-  docker build -t store_metadb . 
+  docker build -t variant_metadb . 
 
-  docker run -p 5432:5432 --net=metadb_network -d --name metadb store_metadb
+  docker run -p 5432:5432 --net=variant_store -d --name variant_metadb variant_metadb
 
-Start Variant Store Server:
+** The choice of container name is important here; variant_metadb is the name that the initialization process knows to look for to complete. 
 
-Inside variant_store/
+Start MetaDB Initialization:
 
-  docker build -t store_server . 
+Inside variant_metadb_init/
 
-  docker run --net=metadb_network store_server
+  docker build -t variant_metadb_init .
+
+  docker run --net=variant_store variant_metadb_init
 
 
 Commands for spinning up all containers with docker-compose:

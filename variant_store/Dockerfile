@@ -56,15 +56,15 @@ RUN make BUILD=release GENOMICSDB_DIR=/opt/variant_store/store/search_library/de
 WORKDIR $VARIANTSTORE_DIR/store
 RUN pip install -r requirements.txt && python setup.py develop
 
-WORKDIR $VARIANTSTORE_DIR/store/metadb
-ADD alembic.metadb.ini ./alembic.ini
-CMD alembic upgrade head
+#WORKDIR $VARIANTSTORE_DIR/store/metadb
+#ADD alembic.metadb.ini ./alembic.ini
+#CMD alembic upgrade head
 
-## Configure Server
-#ADD variantstore.ini . 
-#ADD ga4gh.conf web/ga4gh_test.conf
-#ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
+# Configure Server
+ADD variantstore.ini . 
+ADD ga4gh.conf web/ga4gh_test.conf
+ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
 
-#EXPOSE 5000
-#ENTRYPOINT ["uwsgi"]
-#CMD ["--ini", "variantstore.ini"]
+EXPOSE 5000
+ENTRYPOINT ["uwsgi"]
+CMD ["--ini", "variantstore.ini"]

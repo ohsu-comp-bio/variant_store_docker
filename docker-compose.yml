@@ -1,25 +1,22 @@
+
 version: '2'
 
 services:
-  metadb:
-    container_name: store_metadb
-    build: MetaDB
+  variant_metadb:
+    container_name: variant_metadb
+    build: variant_metadb
     ports:
     - 5432:5432
 
-  genomicsdb:
-    container_name: store_base
-    build: GenomicsDB
+  variant_metadb_init:
+    container_name: variant_metadb_init
+    build: variant_metadb_init
+    links:
+    - variant_metadb
+    restart: on-failure
 
   variant_store:
-    container_name: store_server
+    container_name: variant_store
     build: variant_store
-    links:
-    - metadb
     ports:
     - 6000:5000
-
-networks:
-  default:
-    external:
-      name: metadb_network
