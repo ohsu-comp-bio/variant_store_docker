@@ -54,6 +54,8 @@ RUN make BUILD=release GENOMICSDB_DIR=/opt/variant_store/store/search_library/de
 
 # Install python dependencies and store modules
 WORKDIR $VARIANTSTORE_DIR/store
+RUN virtualenv venv
+RUN . venv/bin/activate
 RUN pip install -r requirements.txt && python setup.py develop
 ENV PATH $VARIANTSTORE_DIR/store/search_library/dependencies/GenomicsDB/bin:$PATH
 
@@ -63,10 +65,10 @@ RUN create_tiledb_workspace /opt/genomic_io/ce/
 VOLUME /opt/genomic_io/
 
 # Configure Server
-#ADD variantstore.ini . 
-#ADD ga4gh.conf web/ga4gh_test.conf
-#ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
+ADD variantstore.ini . 
+ADD ga4gh.conf web/ga4gh_test.conf
+ENV PYTHONPATH $VARIANTSTORE_DIR/store/web
 
-#EXPOSE 5000
-#ENTRYPOINT ["uwsgi"]
-#CMD ["--ini", "variantstore.ini"]
+EXPOSE 5000
+ENTRYPOINT ["uwsgi"]
+CMD ["--ini", "variantstore.ini"]
