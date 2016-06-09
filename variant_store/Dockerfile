@@ -10,6 +10,7 @@ FROM centos:7
 # build requires gcc version >= 4.9.0, which we get using devtoolset-3.
 # psycopg2 needs pg_config in postgresql-devel
 # uwsgi needs Python.h in python-devel
+# PyVCF==0.6.7 conflicts with virtualenv version installed by pip, so we install virtualenv using yum
 RUN yum -y update
 RUN yum -y install centos-release-scl-rh
 RUN yum -y install epel-release
@@ -23,8 +24,7 @@ RUN yum -y install \
   python-pip \
   python-setuptools \ 
   postgresql-devel \
-  uwsgi
-RUN yum -y groupinstall "Development Tools"
+  python-virtualenv
 
 # scl enable devtoolset-3 bash
 ENV INFOPATH /opt/rh/devtoolset-3/root/usr/share/info

@@ -1,4 +1,6 @@
 
+  docker build -t variant_store .
+
 The server container must export port 5000 and map host machine MAF and import config files to locations on the
 container file system.  Run container using:
 
