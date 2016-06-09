@@ -35,7 +35,7 @@ ENV MPI_DIR /etc/alternatives
 ENV VARIANTSTORE_DIR /opt/variant_store
 
 # store repository must be cloned into the docker context before docker build.
-# git clone --recursive --depth 1 https://github.com/Intel-HSS/store.git $VARIANTSTORE_DIR/store
+# git clone --recursive --depth 1 git@github.com:Intel-HSS/store.git $VARIANTSTORE_DIR/store
 # after recursive clone you'll need to remove the ".git" files and directories so that htslib Makefile doesn't try to
 # read the library version number from the git repository.  The problem is that the submodules use absolute pathnames,
 # which will be absolute in the host machine, not the image, so reading the version from git files produces error
